@@ -1,0 +1,23 @@
+server:
+  port: 7777
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/employee
+    username: postgres
+    password: 12345678
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show_sql: false
+    generate-ddl: true
+    properties:
+      hibernate:
+        show_sql: false
+        generate_statistics: false
+        use_sql_comments: false
+        ddl-auto: update
+        temp:
+          use_jdbc_metadata_defaults: false
