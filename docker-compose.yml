@@ -1,0 +1,39 @@
+version: '3.1'
+services:
+  app:
+    container_name: app-spring-docker
+    image: app-spring-docker
+    build: ./
+    ports:
+      - "7777:7777"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://dbpostgresql:5432/employee
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345678
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - dbpostgresql
+    networks:
+      - app-net
+    volumes:
+      - data:/tmp
+  dbpostgresql:
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=employee
+    networks:
+      - app-net
+    volumes:
+      - "./postgres/data:/var/lib/postgresql/data"
+volumes:
+  dbpostgresql:
+    driver: local
+  data:
+    driver: local
+networks:
+  app-net:
+    driver: bridge
